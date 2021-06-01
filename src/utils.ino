@@ -50,9 +50,10 @@ bool deserializePlan(const char* plan, store & intoStore, String & msg) {
         
         intoStore.sessions[i].durationMin = getInt(plan, pos);
         SERIAL_(" duration:");
-        SERIAL_(intoStore.sessions[i].durationMin);
+        SERIAL_ln(intoStore.sessions[i].durationMin);
 
-        //intoStore.sessions[i].recurrent = (getInt(plan, pos) == 1);
+        //skip recurrent flag
+        getInt(plan, pos);
         //intoStore.sessions[i].executed = false;
         // if (intoStore.sessions[i].recurrent) {
         //     SERIAL_ln(" recu");
