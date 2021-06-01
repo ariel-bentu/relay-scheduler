@@ -25,14 +25,32 @@ I used it for water sprinklers but of course it can be used to any electrical po
 
 ## Setup steps
 1. flush the software to the arduino device
-2. deploy the google Apps Script (details below...)
-3. setup a new, dedicated google calendar in your existing Gmail account
+2. setup a new, dedicated google calendar in your existing Gmail account
+3. deploy the google Apps Script (details below...)
 4. wire the device to the relay and your electrical device to the relay channels (details below...)
 5. Configure the device via a web interface (details below...)
 6. you are good to go!
 
 ### 1. flush the software to the arduino device
-TODO
+This project is setup to use PlatformIO. I found it very useful to work with WeMos, I used VSCode's plugin of PlatformIO (PlatformIO IDE). Follow the plugin details page to see how to flush the code into the device.
+
+### 3. deploy the google Apps Script
+- Goto `https://script.google.com/`
+- Create new project
+- Copy and paste the code in `src/code.gs` into your project's `code.gs` file
+- Press 'Deploy'-> 'New Deployment'
+- Select type: webapp, execute as: Me (you Gmail address), Who has access: Anyone. - press 'Deploy'
+<br/>
+<img src="media/deploy.png"/>
+<br/>
+- Authorize -> choose you Gmail account -> click 'advanced' -> click `go to <your project name>` -> Press 'Allow'
+<br/>
+<img src="media/trust.png"/>
+<br/>
+- Copy the URL of the webapp - it has the following format: `https://script.google.com/macros/s/<function-name>/exec`
+- Test it by adding `?cal=<calendar name>` - the calendar you created in step 2.
+- Save the function name for later use in step 5
+
 
 ### 4. wire the device
 - relay channels wires: D1 to channel 1 (IN1), D2 to channel 2 (IN2), ...
@@ -41,7 +59,7 @@ TODO
 - `G` to relay's `DC-`
 
 ### 5. Configure the device via a web interface 
-
+TODO
 
 ## My final result
 <img src="media/final-product.jpeg"/>
