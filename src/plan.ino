@@ -8,6 +8,7 @@
 
 char eTag[11];
 long lastPlanUpdate = 0;
+char lastPlanTime[11] = "";
 
 const char *applyEtag(const char *newPlan)
 {
@@ -32,10 +33,9 @@ const char *applyTime(const char *newPlan)
 {
     int len = parsePipeToken(newPlan, 10);
     //day:hh:mm:ss = max 10
-    char newTime[11];
-    strncpy(newTime, newPlan, len);
-    newTime[len] = '\0';
-    updateNewTime(newTime);
+    strncpy(lastPlanTime, newPlan, len);
+    lastPlanTime[len] = '\0';
+    updateNewTime(lastPlanTime);
     updateTime();
     SERIAL_("Time updated: ");
     showTime();
@@ -62,7 +62,7 @@ bool isNewPlan(const char *plan)
     return strncmp(plan, "-|", 2) != 0;
 }
 
-bool readPlan(String & msg)
+bool readPlan(String &msg)
 {
     digitalWrite(LED_BUILTIN, HIGH); // turn the LED on (HIGH is the voltage level)
     String plan;
@@ -77,6 +77,10 @@ bool readPlan(String & msg)
         if (newPlan)
         {
             applyPlan(planNoTime, msg);
+        }
+        else
+        {
+            msg = sprintf("No new plan, %s", plan.c_str());
         }
     }
     digitalWrite(LED_BUILTIN, LOW); // turn the LED off by making the voltage LOW
@@ -101,4 +105,9 @@ bool getPlan(String &plan, String &msg)
         return true;
     }
     return false;
+}
+
+String  getLastPlanUpdate()
+{
+    return lastPlanTime;
 }

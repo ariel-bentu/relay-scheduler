@@ -25,6 +25,9 @@ I used it for water sprinklers but of course it can be used to any electrical po
 
 ## Setup steps
 1. flush the software to the arduino device
+   - if using espressif8266, for me (Wemos D1 mini), only v2.5.2 worked. anything higher did not
+
+
 2. setup a new, dedicated google calendar in your existing Gmail account
 3. deploy the google Apps Script (details below...)
 4. wire the device to the relay and your electrical device to the relay channels (details below...)
