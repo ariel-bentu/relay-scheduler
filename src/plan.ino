@@ -1,6 +1,6 @@
 
 #include "sessionTypes.h"
-#include "wemosD1Mini.h"
+//#include "wemosD1Mini.h"
 
 #include "config.h"
 #include "utils.h"
@@ -80,7 +80,7 @@ bool readPlan(String &msg)
         }
         else
         {
-            msg = sprintf("No new plan, %s", plan.c_str());
+            msg = sprintf("No new plan, %s", p);
         }
     }
     digitalWrite(LED_BUILTIN, LOW); // turn the LED off by making the voltage LOW

@@ -18,7 +18,7 @@
 
 #define MAX_RELAYS  6
 #define MAX_SESSIONS 128
-#define CURRENT_VERSION 1239
+#define CURRENT_VERSION 1240
 #define FUNC_MAX_LEN 100
 
 struct relay {
@@ -28,10 +28,10 @@ struct relay {
 
 struct WiFiConfig {
     char ssid[50];
-    char pwd[15];
+    char pwd[30];
 
     char ssidAP[50];
-    char pwdAP[15];
+    char pwdAP[30];
 };
 
 struct CalendarConfig {

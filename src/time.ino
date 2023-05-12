@@ -18,7 +18,8 @@ void updateNewTime(const char *time) {
 
     offsetMillisToWeekStart = millis() - millisFromWeekStart;
 }
-Time * updateTime() {
+
+extern "C" Time * updateTime() {
     unsigned long secondsFromWeekStart = getSecondsFromWeekStart();
 
     gTime.sec = secondsFromWeekStart % 60;
@@ -50,7 +51,7 @@ unsigned long getMillisFromWeekStart(int day, int hour, int min, int sec) {
     return (minFromWeekStart*60 + sec)*1000;
 }
 
-unsigned long getMinFromWeekStart(int day, int hour, int min) {
+unsigned int getMinFromWeekStart(int day, int hour, int min) {
     return (day-1)*24*60 + hour*60 + min;
 }
 

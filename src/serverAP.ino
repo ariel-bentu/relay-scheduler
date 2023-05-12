@@ -1,11 +1,17 @@
-#include <ESP8266WebServer.h>
+//#include <ESP8266WebServer.h>
+#include <WiFi.h>
+#include <WebServer.h>
 #include <DNSServer.h>
 #include "sessionTypes.h"
 
-ESP8266WebServer serverAP(80);
+WebServer serverAP(80);
+
 // const byte DNS_PORT = 53;
 IPAddress apIP(10, 25, 1, 1);
 // DNSServer dnsServer;
+
+// Variable to store the HTTP request
+String header;
 
 void reconnectAP()
 {
@@ -16,6 +22,8 @@ void reconnectAP()
 void initServerAP()
 {
     WiFi.softAPConfig(apIP, apIP, IPAddress(255, 255, 255, 0));
+    Serial.printf("Setting AP (%s)\n", gStore.wifiConfig.ssidAP);
+
     WiFi.softAP(gStore.wifiConfig.ssidAP, gStore.wifiConfig.pwdAP);
 
     serverAP.on("/", handleRoot);
@@ -30,14 +38,16 @@ void initServerAP()
     serverAP.on("/setup-cal", HTTP_POST, handleSetCalConfig);
     serverAP.on("/disable", HTTP_GET, handleGetDisable);
     serverAP.on("/disable", HTTP_POST, handlePostDisable);
+   
+
     serverAP.begin();
 }
 
 void loopAP()
 {
     serverAP.handleClient();
-}
 
+}
 void handleRoot()
 {
 
@@ -178,7 +188,7 @@ void handleOnOff(bool on)
                 gOveride[ID - 1].until = getMinFromWeekStart() + DEFAULT_ADHOC_MIN;
             }
         }
-        //turnOnOffRelay(ID, on);
+        turnOnOffRelay(ID, on);
 
         SERIAL_ln(message);
         serverAP.send(200, "text/plain", message);
@@ -272,3 +282,4 @@ void sendOkBack()
 {
     serverAP.send(200, "text/html", "Successfully saved<br><a href='/'>Back...</a>");
 }
+

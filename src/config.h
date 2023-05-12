@@ -3,7 +3,7 @@
 #define LOG_MAX_LEN 60
 const char* host = "script.google.com";
 
-char ssidAP[] = "AUTOMATION_AP2";      
+char ssidAP[] = "AUTOMATION_AP";      
 char pwdAP[] = "auto1234"; 
 
 
