@@ -99,11 +99,53 @@ void handleRoot()
                         "<a href='/setup-cal'>Setup Google Calendar ...</a><br/>"
                         "<a href='/refresh-plan'>Reload plan from calendar</a><br/>"
                         "<a href='/disable'>Disable system temporarily...</a><br/>";
-    serverAP.setContentLength(strlen(menu) + strlen(head) + relays.length() + status.length());
+    String plan = "<h2>Plan</h2>\n";
+    plan +="<Table border=\"1\"><th><tr><td>Relay</td>";
+    plan +="<td>Sun</td>";
+    plan +="<td>Mon</td>";
+    plan +="<td>Tue</td>";
+    plan +="<td>Wed</td>";
+    plan +="<td>Thu</td>";
+    plan +="<td>Fri</td>";
+    plan +="<td>Sat</td></tr></th>\n";
+    for (int i = 0; i < MAX_RELAYS; i++) {
+        plan.concat("<tr>");
+        plan.concat("<td>");
+        plan.concat(i+1);
+        plan.concat("</td>");
+        for (int j = 0; j < 7; j++) {
+            plan += "<td>";
+            // days
+            for (int k = 0; k < gStore.activeSessions; k++) {
+                if (gStore.sessions[k].relayID == i+1) {
+                    const unsigned int day = dayFromMinFromWeekStart(gStore.sessions[k].minuteInWeek);
+                    if (day == j) {
+                        //match
+                        const unsigned int hour = hourFromMinFromWeekStart(gStore.sessions[k].minuteInWeek);
+                        const unsigned int min = minFromMinFromWeekStart(gStore.sessions[k].minuteInWeek);
+                        plan.concat(hour);
+                        plan.concat(":");
+                        plan.concat(min);
+                        plan.concat("(");
+                        plan.concat(gStore.sessions[k].durationMin);
+                        plan.concat(")<br/>\n");
+                    }
+                }
+            }
+            
+            plan.concat("</td>");
+        }
+        plan.concat("</tr>");
+    }
+    plan.concat("</table>");
+
+    serverAP.setContentLength(strlen(menu) + strlen(head) + relays.length() + status.length() + plan.length());
     serverAP.send(200, "text/html", head);
     serverAP.sendContent(status);
     serverAP.sendContent(menu);
     serverAP.sendContent(relays);
+    serverAP.sendContent(plan);
+
 }
 
 void handleWifiSetupHTML()

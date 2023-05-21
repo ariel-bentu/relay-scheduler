@@ -89,6 +89,9 @@ bool readPlan(String &msg)
 
 bool getPlan(String &plan, String &msg)
 {
+    // plan = "abcd|1:17:9:0|11 3 1 17:10 60 0 1 1 18:0 45 1 2 1 19:0 45 1 3 2 4:0 20 1 5 2 4:20 20 1 1 3 18:0 45 1 2 3 19:0 45 1 3 5 4:0 20 1 5 5 4:20 20 1 1 5 18:0 45 1 2 5 19:0 45 1";
+    // lastPlanUpdate = millis();
+    // return true;
     if (strlen(gStore.calConfig.funcName) == 0 ||
         strlen(gStore.calConfig.name) == 0)
     {

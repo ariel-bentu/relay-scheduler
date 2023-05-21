@@ -64,3 +64,13 @@ unsigned int getSecondsFromWeekStart() {
     return seconds % 604800;  // seconds in a week 
 }
 
+unsigned int dayFromMinFromWeekStart(const unsigned int min) {
+    return (min/60)/24;
+}
+unsigned int hourFromMinFromWeekStart(const unsigned int min) {
+    return (min/60) % 24;
+}
+unsigned int minFromMinFromWeekStart(const unsigned int min) {
+    return (min % 60) % 24;
+}
+

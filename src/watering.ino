@@ -76,42 +76,42 @@ void loop()
     {
         showTime();
     }
-    // maybeRefreshPlan();
+    maybeRefreshPlan();
 
-    // unsigned int timeMinSinceWeekStart = getMinFromWeekStart();
-    // if (t->sec == 0)
-    // {
-    //     SERIAL_("Min. from week start:");
-    //     SERIAL_ln(timeMinSinceWeekStart);
-    // }
-    // bool relays[MAX_RELAYS];
-    // for (int j = 0; j < MAX_RELAYS; j++)
-    //     relays[j] = false;
+    unsigned int timeMinSinceWeekStart = getMinFromWeekStart();
+    if (t->sec == 0)
+    {
+        SERIAL_("Min. from week start:");
+        SERIAL_ln(timeMinSinceWeekStart);
+    }
+    bool relays[MAX_RELAYS];
+    for (int j = 0; j < MAX_RELAYS; j++)
+        relays[j] = false;
 
-    // for (int i = 0; i < gStore.activeSessions; i++)
-    // {
-    //     bool onOff = gStore.sessions[i].minuteInWeek <= timeMinSinceWeekStart &&
-    //                  (gStore.sessions[i].minuteInWeek + gStore.sessions[i].durationMin) > timeMinSinceWeekStart;
+    for (int i = 0; i < gStore.activeSessions; i++)
+    {
+        bool onOff = gStore.sessions[i].minuteInWeek <= timeMinSinceWeekStart &&
+                     (gStore.sessions[i].minuteInWeek + gStore.sessions[i].durationMin) > timeMinSinceWeekStart;
 
-    //     if (onOff)
-    //     {
-    //         relays[gStore.sessions[i].relayID - 1] = true;
-    //     }
-    // }
+        if (onOff)
+        {
+            relays[gStore.sessions[i].relayID - 1] = true;
+        }
+    }
 
-    // for (int j = 0; j < MAX_RELAYS; j++)
-    // {
-    //     if (gOveride[j].until >= timeMinSinceWeekStart && timeMinSinceWeekStart > 0)
-    //     {
-    //         relays[j] = gOveride[j].on;
-    //     }
-    //     else
-    //     {
-    //         gOveride[j].until = 0; 
-    //     }
-    // }
-    // for (int j = 0; j < MAX_RELAYS; j++)
-    //     turnOnOffRelay(j + 1, relays[j]);
+    for (int j = 0; j < MAX_RELAYS; j++)
+    {
+        if (gOveride[j].until >= timeMinSinceWeekStart && timeMinSinceWeekStart > 0)
+        {
+            relays[j] = gOveride[j].on;
+        }
+        else
+        {
+            gOveride[j].until = 0; 
+        }
+    }
+    for (int j = 0; j < MAX_RELAYS; j++)
+        turnOnOffRelay(j + 1, relays[j]);
 
     loopAP(); 
 
